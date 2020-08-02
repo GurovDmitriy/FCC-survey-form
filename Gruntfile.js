@@ -136,7 +136,7 @@ module.exports = function (grunt) {
     cwebp: {
       imagesWebp: {
         options: {
-          q: 90,
+          q: 70,
         },
         files: [{
           expand: true,

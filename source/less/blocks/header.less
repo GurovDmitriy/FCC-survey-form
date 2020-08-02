@@ -1,0 +1,37 @@
+.header {
+  padding-top: 50px;
+  padding-bottom: 25px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  @media (min-width: @tabletWidth) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media (min-width: @tabletWidth2) {
+    .container(@containerTablet2);
+  }
+
+  @media (min-width: @desktopWidth) {
+    .container(@containerDesktop);
+  }
+}
+
+.header__caption {
+  margin-top: 0;
+  margin-bottom: 10px;
+
+  .fontTitleMobile();
+  font-weight: 400;
+  text-align: center;
+}
+
+.header__text {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  font-style: italic;
+  font-weight: 200;
+  text-align: center;
+}

@@ -1,0 +1,25 @@
+.main {
+  padding-top: 25px;
+  padding-bottom: 50px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  background-color: var(--color-darkblue-alpha);
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+
+  @media (min-width: @tabletWidth) {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media (min-width: @tabletWidth2) {
+    .container(@containerTablet2);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  @media (min-width: @desktopWidth) {
+    .container(@containerDesktop);
+  }
+}
