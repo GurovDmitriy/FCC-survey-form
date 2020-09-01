@@ -181,6 +181,21 @@ module.exports = function (grunt) {
       },
     },
 
+    htmlmin: {
+      dev: {
+        options: {
+          removeComments: true,
+          collapseWhitespace: true,
+        },
+        files: [{
+          expand: true,
+          cwd: 'build',
+          src: ['**/*.html', '*.html'],
+          dest: 'build',
+        }],
+      },
+    },
+
     clean: {
       buildClean: {
         src: ['build/'],
@@ -259,7 +274,7 @@ module.exports = function (grunt) {
     'postcss',
     'csso',
     'uglify',
-    'prettify',
+    'htmlmin',
     'browserSync:serverSyncDev',
     'concurrent:targetWatchDev',
   ]);
@@ -278,6 +293,6 @@ module.exports = function (grunt) {
     'postcss',
     'csso',
     'uglify',
-    'prettify',
+    'htmlmin',
   ]);
 };
