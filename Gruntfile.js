@@ -16,21 +16,17 @@ module.exports = function (grunt) {
         files: ['source/less/**/*.less'],
         tasks: ['less'],
       },
-      jsWatch: {
-        files: ['source/js/*/*.js'],
-        tasks: ['concat'],
-      },
       HtmlWatchDev: {
         files: ['source/*.html'],
-        tasks: ['clean:buildCleanHtmlDev', 'copy:buildHtmlCopy', 'prettify'],
+        tasks: ['clean:buildCleanHtmlDev', 'copy:buildHtmlCopy', 'htmlmin'],
       },
       styleWatchDev: {
         files: ['source/less/**/*.less'],
-        tasks: ['less', 'clean:buildCleanStyleDev', 'copy:buildStyleCopy', 'postcss', 'csso'],
+        tasks: ['less', 'clean:buildCleanStyleDev', 'copy:buildStyleCopy', 'postcss', 'cssmin'],
       },
       jsWatchDev: {
-        files: ['source/js/*/*.js'],
-        tasks: ['concat', 'clean:buildCleanJsDev', 'copy:buildJsCopy', 'uglify'],
+        files: ['source/js/**/*.js'],
+        tasks: ['clean:buildCleanJsDev', 'copy:buildJsCopy', 'uglify'],
       },
     },
 
@@ -61,8 +57,8 @@ module.exports = function (grunt) {
           relativeUrls: true,
         },
         files: {
-          'source/css/style.css': 'source/less/style.less'
-        }
+          'source/css/style.css': 'source/less/style.less',
+        },
       },
     },
 
@@ -77,29 +73,15 @@ module.exports = function (grunt) {
       },
     },
 
-    csso: {
-      styleMin: {
-        options: {
-          report: 'gzip',
-        },
-        expand: true,
-        cwd: 'build/css/',
-        src: ['*.css', '!*.min.css'],
-        dest: 'build/css/',
-      },
-    },
-
-    concat: {
-      options: {
-        separator: '\n',
-        stripBanners: true,
-        banner: "'use strict'\n\n",
-      },
-      dist: {
-        files: {
-          'source/js/index.js': ['source/js/index/*.js'],
-        },
-      },
+    cssmin: {
+      target: {
+        files: [{
+          expand: true,
+          cwd: 'build/css/',
+          src: ['*.css', '!*.min.css'],
+          dest: 'build/css/',
+        }]
+      }
     },
 
     uglify: {
@@ -112,8 +94,8 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'build/js',
           src: '*.js',
-          dest: 'build/js'
-        }]
+          dest: 'build/js',
+        }],
       },
     },
 
@@ -196,6 +178,13 @@ module.exports = function (grunt) {
       },
     },
 
+    ttf2woff2: {
+      default: {
+        src: ['source/fonts/ttf/*.ttf'],
+        dest: 'source/fonts/woff2/',
+      },
+    },
+
     clean: {
       buildClean: {
         src: ['build/'],
@@ -217,9 +206,11 @@ module.exports = function (grunt) {
           expand: true,
           cwd: 'source',
           src: [
+            '*.xml',
             '*.html',
             'fonts/woff2/*',
             'image/min/*',
+            'image/favicon/*',
             'css/style.css',
             'js/*.js',
           ],
@@ -261,18 +252,16 @@ module.exports = function (grunt) {
 
   grunt.registerTask('serve', [
     'less',
-    'concat',
     'browserSync:serverSync',
     'concurrent:targetWatch',
   ]);
 
   grunt.registerTask('serveDev', [
     'less',
-    'concat',
     'clean:buildClean',
     'copy:buildCopy',
     'postcss',
-    'csso',
+    'cssmin',
     'uglify',
     'htmlmin',
     'browserSync:serverSyncDev',
@@ -287,11 +276,10 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'less',
-    'concat',
     'clean:buildClean',
     'copy:buildCopy',
     'postcss',
-    'csso',
+    'cssmin',
     'uglify',
     'htmlmin',
   ]);
