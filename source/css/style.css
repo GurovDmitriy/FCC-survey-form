@@ -594,6 +594,9 @@ option[value=""][disabled] {
 option {
   color: #000;
 }
+.form__copyright {
+  color: var(--color-green);
+}
 .main {
   padding-top: 25px;
   padding-bottom: 50px;
